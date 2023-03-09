@@ -7,8 +7,8 @@ import { addresses } from "src/constants";
 import React, { ReactNode } from "react";
 
 export enum NetworkID {
-  Mainnet = 1,
-  Testnet = 4,
+  Mainnet = 5,
+  Testnet = 5,
 }
 
 export enum BondType {

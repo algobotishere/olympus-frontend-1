@@ -19,6 +19,7 @@ import { abi as ReserveOhmFraxContract } from "src/abi/reserves/OhmFrax.json";
 import { abi as FraxBondContract } from "src/abi/bonds/FraxContract.json";
 import { abi as LusdBondContract } from "src/abi/bonds/LusdContract.json";
 import { abi as EthBondContract } from "src/abi/bonds/EthContract.json";
+import { abi as GinuBondContract } from "src/abi/bonds/GinuContract.json";
 
 // TODO(zx): Further modularize by splitting up reserveAssets into vendor token definitions
 //   and include that in the definition of a bond
@@ -76,7 +77,25 @@ export const lusd = new StableBond({
   },
 });
 
-export const eth = new CustomBond({
+export const ginu = new StableBond({
+  name: "ginu",
+  displayName: "Goerli INU",
+  bondToken: "GINU",
+  bondIconSvg: wETHImg,
+  bondContractABI: GinuBondContract,
+  networkAddrs: {
+    [NetworkID.Mainnet]: {
+      bondAddress: "0x6980057B6671c36180a2fc94A5004215B3347B85",
+      reserveAddress: "0xc81c3568AF1776E00d51514B6477269339FDd7A3",
+    },
+    [NetworkID.Testnet]: {
+      bondAddress: "0x6980057B6671c36180a2fc94A5004215B3347B85",
+      reserveAddress: "0xc81c3568AF1776E00d51514B6477269339FDd7A3",
+    },
+  },
+});
+
+export const eth = new StableBond({
   name: "eth",
   displayName: "wETH",
   bondToken: "wETH",
@@ -84,23 +103,23 @@ export const eth = new CustomBond({
   bondContractABI: EthBondContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0xE6295201CD1ff13CeD5f063a5421c39A1D236F1c",
-      reserveAddress: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      bondAddress: "0xE8e257b5e3eE8662C535e76b0f18b4295fB04d3C",
+      reserveAddress: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
     },
     [NetworkID.Testnet]: {
-      bondAddress: "0xca7b90f8158A4FAA606952c023596EE6d322bcf0",
-      reserveAddress: "0xc778417e063141139fce010982780140aa0cd5ab",
+      bondAddress: "0xE8e257b5e3eE8662C535e76b0f18b4295fB04d3C",
+      reserveAddress: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
     },
   },
-  customTreasuryBalanceFunc: async function (this: CustomBond, networkID, provider) {
-    const ethBondContract = this.getContractForBond(networkID, provider);
-    let ethPrice = await ethBondContract.assetPrice();
-    ethPrice = ethPrice / Math.pow(10, 8);
-    const token = this.getContractForReserve(networkID, provider);
-    let ethAmount = await token.balanceOf(addresses[networkID].TREASURY_ADDRESS);
-    ethAmount = ethAmount / Math.pow(10, 18);
-    return ethAmount * ethPrice;
-  },
+  // customTreasuryBalanceFunc: async function (this: CustomBond, networkID, provider) {
+  //   const ethBondContract = this.getContractForBond(networkID, provider);
+  //   let ethPrice = await ethBondContract.assetPrice();
+  //   ethPrice = ethPrice / Math.pow(10, 8);
+  //   const token = this.getContractForReserve(networkID, provider);
+  //   let ethAmount = await token.balanceOf(addresses[networkID].TREASURY_ADDRESS);
+  //   ethAmount = ethAmount / Math.pow(10, 18);
+  //   return ethAmount * ethPrice;
+  // },
 });
 
 export const ohm_dai = new LPBond({
@@ -171,7 +190,9 @@ export const ohm_lusd = new LPBond({
 // Is it a stableCoin bond? use `new StableBond`
 // Is it an LP Bond? use `new LPBond`
 // Add new bonds to this array!!
-export const allBonds = [dai, frax, eth, ohm_dai, ohm_frax, lusd, ohm_lusd];
+// export const allBonds = [dai, frax, eth, ohm_dai, ohm_frax, lusd, ohm_lusd];
+export const allBonds = [ginu, eth];
+
 export const allBondsMap = allBonds.reduce((prevVal, bond) => {
   return { ...prevVal, [bond.name]: bond };
 }, {});
