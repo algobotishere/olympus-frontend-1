@@ -59,7 +59,7 @@ function NavContent() {
 
           <div className="dapp-menu-links">
             <div className="dapp-nav" id="navbarNav">
-              <Link
+              {/* <Link
                 component={NavLink}
                 id="dash-nav"
                 to="/dashboard"
@@ -72,7 +72,7 @@ function NavContent() {
                   <SvgIcon color="primary" component={DashboardIcon} />
                   Dashboard
                 </Typography>
-              </Link>
+              </Link> */}
 
               <Link
                 component={NavLink}
@@ -89,7 +89,7 @@ function NavContent() {
                 </Typography>
               </Link>
 
-              <Link
+              {/* <Link
                 component={NavLink}
                 id="33-together-nav"
                 to="/33-together"
@@ -102,7 +102,7 @@ function NavContent() {
                   <SvgIcon color="primary" component={PoolTogetherIcon} />
                   3,3 Together
                 </Typography>
-              </Link>
+              </Link> */}
 
               <Link
                 component={NavLink}
@@ -142,7 +142,7 @@ function NavContent() {
           </div>
         </div>
         <Box className="dapp-menu-bottom" display="flex" justifyContent="space-between" flexDirection="column">
-          <div className="dapp-menu-external-links">
+          {/* <div className="dapp-menu-external-links">
             {Object.keys(externalUrls).map((link, i) => {
               return (
                 <Link key={i} href={`${externalUrls[link].url}`} target="_blank">
@@ -151,7 +151,7 @@ function NavContent() {
                 </Link>
               );
             })}
-          </div>
+          </div> */}
           <div className="dapp-menu-social">
             <Social />
           </div>

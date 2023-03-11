@@ -45,7 +45,6 @@ function OhmMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const isEthereumAPIAvailable = window.ethereum;
   const { chainID } = useWeb3Context();
-  console.log("chainID", chainID);
   const networkID = chainID;
 
   const SOHM_ADDRESS = addresses[networkID].SOHM_ADDRESS;

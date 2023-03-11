@@ -19,13 +19,18 @@ export async function getMarketPrice({ networkID, provider }: IBaseAsyncThunk) {
   const reserves = await pairContract.getReserves();
   const marketPrice = reserves[1] / reserves[0];
 
-  // commit('set', { marketPrice: marketPrice / Math.pow(10, 9) });
+  // commit("set", { marketPrice: marketPrice / Math.pow(10, 9) });
+  console.log("marketPrice", marketPrice);
   return marketPrice;
 }
 
 export async function getTokenPrice(tokenId = "olympus") {
-  const resp = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${tokenId}&vs_currencies=usd`);
-  let tokenPrice: number = resp.data[tokenId].usd;
+  if (tokenId === "olympus") {
+    tokenId = addresses[5].OHM_ADDRESS;
+  }
+  const resp = await axios.get(`https://api.dexscreener.com/latest/dex/pairs/goerli/${tokenId}`);
+  let tokenPrice: number = resp.data.pairs[0].priceUsd;
+  console.log("Token ID: ", tokenId, " Price: ", tokenPrice, "");
   return tokenPrice;
 }
 

@@ -122,21 +122,22 @@ export const eth = new StableBond({
   // },
 });
 
+//FFDAO _ WETH
 export const ohm_dai = new LPBond({
   name: "ohm_dai_lp",
-  displayName: "OHM-DAI LP",
-  bondToken: "DAI",
+  displayName: "FFDAO-WETH LP",
+  bondToken: "WETH",
   bondIconSvg: OhmDaiImg,
   bondContractABI: BondOhmDaiContract,
   reserveContract: ReserveOhmDaiContract,
   networkAddrs: {
     [NetworkID.Mainnet]: {
-      bondAddress: "0x956c43998316b6a2F21f89a1539f73fB5B78c151",
-      reserveAddress: "0x34d7d7Aaf50AD4944B70B320aCB24C95fa2def7c",
+      bondAddress: "",
+      reserveAddress: "0x27018C6de1A90d115a61B83d22Db67A727344883",
     },
     [NetworkID.Testnet]: {
-      bondAddress: "0xcF449dA417cC36009a1C6FbA78918c31594B9377",
-      reserveAddress: "0x8D5a22Fb6A1840da602E56D1a260E56770e0bCE2",
+      bondAddress: "",
+      reserveAddress: "0x27018C6de1A90d115a61B83d22Db67A727344883",
     },
   },
   lpUrl:

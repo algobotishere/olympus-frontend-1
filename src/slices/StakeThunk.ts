@@ -31,6 +31,8 @@ export const changeApproval = createAsyncThunk(
     const sohmContract = new ethers.Contract(addresses[networkID].SOHM_ADDRESS as string, ierc20Abi, signer);
     let approveTx;
     try {
+      console.log("contract for approval", addresses[networkID].STAKING_HELPER_ADDRESS);
+
       if (token === "ohm") {
         approveTx = await ohmContract.approve(
           addresses[networkID].STAKING_HELPER_ADDRESS,
