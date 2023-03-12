@@ -73,6 +73,7 @@ export const loadAccountDetails = createAsyncThunk(
       const ohmContract = new ethers.Contract(addresses[networkID].OHM_ADDRESS as string, ierc20Abi, provider);
       ohmBalance = await ohmContract.balanceOf(address);
       stakeAllowance = await ohmContract.allowance(address, addresses[networkID].STAKING_HELPER_ADDRESS);
+      console.log("stakeAllowance", stakeAllowance);
     }
 
     if (addresses[networkID].SOHM_ADDRESS) {
@@ -82,24 +83,24 @@ export const loadAccountDetails = createAsyncThunk(
       poolAllowance = await sohmContract.allowance(address, addresses[networkID].PT_PRIZE_POOL_ADDRESS);
     }
 
-    if (addresses[networkID].PT_TOKEN_ADDRESS) {
-      const poolTokenContract = await new ethers.Contract(addresses[networkID].PT_TOKEN_ADDRESS, ierc20Abi, provider);
-      poolBalance = await poolTokenContract.balanceOf(address);
-    }
+    // if (addresses[networkID].PT_TOKEN_ADDRESS) {
+    //   const poolTokenContract = await new ethers.Contract(addresses[networkID].PT_TOKEN_ADDRESS, ierc20Abi, provider);
+    //   poolBalance = await poolTokenContract.balanceOf(address);
+    // }
 
-    for (const fuseAddressKey of ["FUSE_6_SOHM", "FUSE_18_SOHM"]) {
-      if (addresses[networkID][fuseAddressKey]) {
-        const fsohmContract = await new ethers.Contract(
-          addresses[networkID][fuseAddressKey] as string,
-          fuseProxy,
-          provider,
-        );
-        fsohmContract.signer;
-        const exchangeRate = ethers.utils.formatEther(await fsohmContract.exchangeRateStored());
-        const balance = ethers.utils.formatUnits(await fsohmContract.balanceOf(address), "gwei");
-        fsohmBalance += Number(balance) * Number(exchangeRate);
-      }
-    }
+    // for (const fuseAddressKey of ["FUSE_6_SOHM", "FUSE_18_SOHM"]) {
+    //   if (addresses[networkID][fuseAddressKey]) {
+    //     const fsohmContract = await new ethers.Contract(
+    //       addresses[networkID][fuseAddressKey] as string,
+    //       fuseProxy,
+    //       provider,
+    //     );
+    //     fsohmContract.signer;
+    //     const exchangeRate = ethers.utils.formatEther(await fsohmContract.exchangeRateStored());
+    //     const balance = ethers.utils.formatUnits(await fsohmContract.balanceOf(address), "gwei");
+    //     fsohmBalance += Number(balance) * Number(exchangeRate);
+    //   }
+    // }
 
     if (addresses[networkID].WSOHM_ADDRESS) {
       const wsohmContract = new ethers.Contract(addresses[networkID].WSOHM_ADDRESS as string, wsOHM, provider);
@@ -112,9 +113,9 @@ export const loadAccountDetails = createAsyncThunk(
         dai: ethers.utils.formatEther(daiBalance),
         ohm: ethers.utils.formatUnits(ohmBalance, "gwei"),
         sohm: ethers.utils.formatUnits(sohmBalance, "gwei"),
-        fsohm: fsohmBalance,
+        // fsohm: fsohmBalance,
         wsohm: ethers.utils.formatUnits(wsohmBalance, "gwei"),
-        pool: ethers.utils.formatUnits(poolBalance, "gwei"),
+        // pool: ethers.utils.formatUnits(poolBalance, "gwei"),
       },
       staking: {
         ohmStake: +stakeAllowance,
@@ -199,7 +200,7 @@ interface IAccountSlice {
 const initialState: IAccountSlice = {
   loading: false,
   bonds: {},
-  balances: { ohm: "", sohm: "", dai: "", oldsohm: "" },
+  balances: { ohm: "...", sohm: "", dai: "", oldsohm: "" },
 };
 
 const accountSlice = createSlice({
@@ -214,6 +215,7 @@ const accountSlice = createSlice({
     builder
       .addCase(loadAccountDetails.pending, state => {
         state.loading = true;
+        console.log("loading account details", state.loading);
       })
       .addCase(loadAccountDetails.fulfilled, (state, action) => {
         setAll(state, action.payload);

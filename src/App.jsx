@@ -31,7 +31,7 @@ import { girth as gTheme } from "./themes/girth.js";
 import "./style.scss";
 
 // 😬 Sorry for all the console logging
-const DEBUG = true;
+const DEBUG = false;
 
 // 🛰 providers
 if (DEBUG) console.log("📡 Connecting to Mainnet Ethereum");
@@ -91,7 +91,6 @@ function App() {
   const [walletChecked, setWalletChecked] = useState(false);
 
   const isAppLoading = useSelector(state => state.app.loading);
-  console.log("isAppLoading", isAppLoading);
   const isAppLoaded = useSelector(state => typeof state.app.marketPrice != "undefined"); // Hacky way of determining if we were able to load app Details.
   const { bonds } = useBonds();
   async function loadDetails(whichDetails) {
@@ -126,15 +125,14 @@ function App() {
   const loadAccount = useCallback(
     loadProvider => {
       dispatch(loadAccountDetails({ networkID: chainID, address, provider: loadProvider }));
-      console.log(" **************** Dispatch done");
       bonds.map(bond => {
         dispatch(calculateUserBondDetails({ address, bond, provider, networkID: chainID }));
       });
     },
+    console.log(useSelector(state => state.account.balances)),
     [connected],
   );
-  const accountLoaded = useSelector(state => state);
-  console.log("accountLoaded", accountLoaded);
+
   // The next 3 useEffects handle initializing API Loads AFTER wallet is checked
   //
   // this useEffect checks Wallet Connection & then sets State for reload...

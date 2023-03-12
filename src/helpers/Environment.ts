@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 /**
  * Access `process.env` in an environment helper
  * Usage: `EnvHelper.env`

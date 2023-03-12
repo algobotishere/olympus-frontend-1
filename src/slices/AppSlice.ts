@@ -99,6 +99,7 @@ export const loadAppDetails = createAsyncThunk(
     const epoch = await stakingContract.epoch();
     const stakingReward = epoch.distribute;
     const circ = await sohmMainContract.circulatingSupply();
+    console.log("circ", circ);
     const stakingRebase = stakingReward / circ;
     const fiveDayRate = Math.pow(1 + stakingRebase, 5 * 3) - 1;
     const stakingAPY = Math.pow(1 + stakingRebase, 365 * 3) - 1;
