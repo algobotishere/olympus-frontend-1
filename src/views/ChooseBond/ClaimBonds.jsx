@@ -89,7 +89,7 @@ function ClaimBonds({ activeBonds }) {
               {isSmallScreen &&
                 Object.entries(activeBonds).map((bond, i) => <ClaimBondCardData key={i} userBond={bond} />)}
 
-              <Box
+              {/* <Box
                 display="flex"
                 justifyContent="center"
                 className={`global-claim-buttons ${isSmallScreen ? "small" : ""}`}
@@ -128,7 +128,7 @@ function ClaimBonds({ activeBonds }) {
                     </Button>
                   </>
                 )}
-              </Box>
+              </Box> */}
             </Box>
           </Paper>
         </Zoom>

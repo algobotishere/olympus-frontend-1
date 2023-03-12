@@ -111,11 +111,11 @@ function Stake() {
     // 1st catch if quantity > balance
     let gweiValue = ethers.utils.parseUnits(quantity, "gwei");
     if (action === "stake" && gweiValue.gt(ethers.utils.parseUnits(ohmBalance, "gwei"))) {
-      return dispatch(error("You cannot stake more than your OHM balance."));
+      return dispatch(error("You cannot stake more than your FFDAO balance."));
     }
 
     if (action === "unstake" && gweiValue.gt(ethers.utils.parseUnits(sohmBalance, "gwei"))) {
-      return dispatch(error("You cannot unstake more than your sOHM balance."));
+      return dispatch(error("You cannot unstake more than your sFFDAO balance."));
     }
 
     await dispatch(changeStake({ address, action, value: quantity.toString(), provider, networkID: chainID }));
@@ -172,7 +172,7 @@ function Stake() {
                     target="_blank"
                   >
                     <NewReleases viewBox="0 0 24 24" />
-                    <Typography>Migrate sOHM!</Typography>
+                    <Typography>Migrate sFFDAO!</Typography>
                   </Link>
                 )}
               </div>
@@ -222,7 +222,7 @@ function Stake() {
                         Current Index
                       </Typography>
                       <Typography variant="h4">
-                        {currentIndex ? <>{trim(currentIndex, 1)} OHM</> : <Skeleton width="150px" />}
+                        {currentIndex ? <>{trim(currentIndex, 1)} FFDAO</> : <Skeleton width="150px" />}
                       </Typography>
                     </div>
                   </Grid>
@@ -236,7 +236,7 @@ function Stake() {
                   <div className="wallet-menu" id="wallet-menu">
                     {modalButton}
                   </div>
-                  <Typography variant="h6">Connect your wallet to stake OHM</Typography>
+                  <Typography variant="h6">Connect your wallet to stake FFDAO</Typography>
                 </div>
               ) : (
                 <>
@@ -295,7 +295,7 @@ function Stake() {
                               onChangeStake("stake");
                             }}
                           >
-                            {txnButtonText(pendingTransactions, "staking", "Stake OHM")}
+                            {txnButtonText(pendingTransactions, "staking", "Stake FFDAO")}
                           </Button>
                         ) : (
                           <Button
@@ -323,7 +323,7 @@ function Stake() {
                               onChangeStake("unstake");
                             }}
                           >
-                            {txnButtonText(pendingTransactions, "unstaking", "Unstake OHM")}
+                            {txnButtonText(pendingTransactions, "unstaking", "Unstake FFDAO")}
                           </Button>
                         ) : (
                           <Button
@@ -346,21 +346,21 @@ function Stake() {
                     <div className="data-row">
                       <Typography variant="body1">Your Balance</Typography>
                       <Typography variant="body1">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(ohmBalance, 4)} OHM</>}
+                        {isAppLoading ? <Skeleton width="80px" /> : <>{trim(ohmBalance, 4)} FFDAO</>}
                       </Typography>
                     </div>
 
                     <div className="data-row">
                       <Typography variant="body1">Your Staked Balance</Typography>
                       <Typography variant="body1">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedBalance} sOHM</>}
+                        {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedBalance} sFFDAO</>}
                       </Typography>
                     </div>
 
                     <div className="data-row">
                       <Typography variant="body1">Next Reward Amount</Typography>
                       <Typography variant="body1">
-                        {isAppLoading ? <Skeleton width="80px" /> : <>{nextRewardValue} sOHM</>}
+                        {isAppLoading ? <Skeleton width="80px" /> : <>{nextRewardValue} sFFDAO</>}
                       </Typography>
                     </div>
 
